@@ -97,7 +97,7 @@ class PrivateRecipeAPITests(TestCase):
         """ Test get recipe detail. """
         recipe = create_recipe(user=self.user)
 
-        url = detail_url(user=self.user)
+        url = detail_url(recipe.id)
         res = self.client.get(url)
 
         serializer = RecipeDetailSerializer(recipe)
