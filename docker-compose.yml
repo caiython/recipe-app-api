@@ -21,7 +21,8 @@ services:
       - DB_USER=devuser
       - DB_PASS=changeme
     depends_on:
-      - db
+      db:
+        condition: service_healthy
 
   db:
     image: postgres:16.8-alpine3.20
@@ -31,6 +32,8 @@ services:
       - POSTGRES_DB=devdb
       - POSTGRES_USER=devuser
       - POSTGRES_PASSWORD=changeme
+    healthcheck:
+      test: ["CMD", "pg_isready", "-q", "-d", "devdb", "-U", "devuser"]
 
 volumes:
   dev-db-data:
